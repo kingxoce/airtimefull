@@ -1,0 +1,238 @@
+@font-face {
+    font-family: "lettering";
+    src: url(../fonts/Clement_Times_PUO_Version.ttf);
+}
+
+@font-face {
+    font-family: "forest";
+    src: url(../fonts/Lavone.ttf);
+}
+
+.cuerpo {
+    background-color: var(--overlay);
+    color: #fff;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.cuerpo:before {
+    content: '';
+    background-image: url('../Imagenes/guatemala.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.cuerpo h1{
+    padding-left: 10%;
+    padding-top: 20%;
+    font-size: 4rem;
+    
+}
+
+.tarjetas {
+    margin: 5%;
+}
+
+.tarjetas .col-sm{
+    margin: 5%;
+}
+
+.tarjetas p{
+    text-align: justify;
+    padding-top: 10%;
+}
+
+.tarjetas .col-sm a {
+    color:rgb(23, 23, 85);
+    font: 20px;
+    font-weight: 600;
+    
+}
+
+.tarjetas .col-sm span{
+    color: rgb(231, 168, 49);
+    padding: 5%;
+    font-weight: 800;
+    font-size: 40px;
+}
+
+.textOf {
+    margin: 5%;
+    text-align: center;
+}
+
+.textOf h1 {
+    font-family: "lettering";
+    font-size: 70px;
+    color: rgb(39, 39, 110);
+}
+
+.textOf p {
+    margin: 3%;
+    margin-left: 30%;
+    width: 40%;
+    text-align: center;
+}
+
+.item {
+    min-height: 25rem;
+    min-width: 25rem;
+    padding: 20px;
+}
+
+.item img{
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    pointer-events: none;
+}
+
+.inner-carousel {
+    display: flex;
+}
+
+.caruselVolcanes {
+    cursor:  grab;
+    overflow: hidden;
+}
+
+.text-volcan {
+    text-align: center;
+    font-size: 50px;
+    font-family: forest;
+    color: rgb(40, 36, 105);
+    
+}
+
+.acercaDe {
+    margin: 10% 5%;
+}
+
+.acercaDe h1 {
+    font-size: 60px;
+    font-family: forest;
+    color: rgb(40, 36, 105);
+}
+
+.acercaDe p {
+    font-size: 20px;
+    color: rgba(141, 137, 137, 0.897);
+}
+
+.acercaDe button {
+    width: 130px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.acercaDe button svg {
+    margin-left: 10%;
+}
+
+.productos {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.productos h1{
+    text-align: center;
+    font-family: forest;
+    color: rgb(40, 36, 105);
+}
+
+.paquete-productos {
+    width: 100%;
+    display: flex;
+    max-width: 1100px;
+}
+
+.card {
+    width: 100%;
+    margin: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 1px 10px rgb(0, 0, 0, 0.2);
+    cursor: default;
+    transition: all 400ms ease;
+    color: rgb(32, 32, 99);
+}
+
+.card:hover{
+    box-shadow: 5px 5px 20px rgb(0, 0, 0, 0.4);
+    transform: translateY(-3%);
+}
+
+.card svg {
+    margin-bottom: 3%;
+    margin-right: 2%;
+    color: rgb(32, 32, 99);
+}
+
+.card h6 {
+    margin-top: 5%;
+    color: rgb(184, 174, 174);
+}
+
+.card button {
+    color: #fff;
+    font-weight: 400;
+    font-size: 15px;
+    width: 60%;
+}
+
+.card button svg {
+    color: #fff;
+    margin-bottom: 4%;
+    margin-left: 5%;
+}
+
+hr {
+    width: 80%;
+    margin-left: 10%;
+    border: 50%;
+    margin-top: 5%;
+}
+
+.boletin {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boletin h6 {
+    color: rgb(160, 150, 150);
+    margin-left: 45%;
+    text-align: left;
+}
+
+.boletin h1 {
+    color: rgb(44, 44, 110);
+    font-family: forest;
+    margin-left: 45%;
+    text-align: left;
+}
+
+.boletin .input-group {
+    margin-left: 10%;
+    width: 65%;
+}
+
+.boletin .input-group span {
+    background-color: #fff;
+}

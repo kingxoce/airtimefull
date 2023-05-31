@@ -1,0 +1,74 @@
+
+
+.page {
+    background-color: var(--overlay);
+    color: #fff;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.page:before {
+    content: '';
+    background-image: linear-gradient(rgba(134, 131, 131, 0.5), rgba(143, 141, 141, 0.5)), url('./Imagenes/semuc.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.page .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    margin: auto;
+    padding: 1rem;
+}
+
+.page .content p:first-child {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    height: 0%;
+    color: rgb(255, 255, 255);
+}
+
+.page .content p:nth-child(2) {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 5%;
+    color: rgb(255, 255, 255);
+}
+
+
+.historia {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.2);
+    color: black;
+    height: auto;
+    width: 90%;
+    top: 620px;
+    left: 70px;
+}
+
+.historia p {
+    margin: 3%;
+    text-align: justify;
+}
+
+
+
+
+
+
+
+
+
