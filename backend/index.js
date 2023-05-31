@@ -50,7 +50,12 @@ app.post('/crearc', (req, res) => {
                 if(err) return res.json("Error");    
                 return res.json(data);});});
                 
-
+                app.get("/searchclientname/:name", (req, res) => {  
+                    const sql = "SELECT * FROM CLIENTE WHERE nombres like '?%';";
+                    const name = req.params.name;  
+                    db.query(sql,[name],(err, data) => {      
+                    if(err) return res.json("Error");    
+                    return res.json(data);});});
 
 
 /*app.get('/productos',(req,res)=>{

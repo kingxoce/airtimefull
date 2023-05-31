@@ -14,15 +14,30 @@ function Clientes() {
     const [clientes, setClientes] = useState([]);
     const [tablaClientes, setTablaClientes] = useState([]);
     const [busqueda, setBusqueda] = useState("");
+    const [tabla, setTabla]= useState([]);
+
 
     //conexion por axios hacia la url del backend para obtener los clientes
     const [cliente,setCliente] = useState([])
-    useEffect(()=> {
-    axios.get('http://localhost:4000/clientes-get')
-    .then(res => setCliente(res.data)
-    .catch(err => console.log(err)));
-        
-    },[])
+ 
+
+
+    const peticionGet=async()=>{
+        await axios.get("http://localhost:4000/clientes-get")
+        .then(response=>{
+          setCliente(response.data);
+          setTabla(response.data);
+        }).catch(error=>{
+          console.log(error);
+        })
+      }
+
+
+      useEffect(()=>{
+        peticionGet();
+        },[])
+
+
 
     const handleDelete = async (id) => {        try {            
         await axios.delete('http://localhost:4000/deleteclient/'+id)
@@ -38,14 +53,14 @@ function Clientes() {
     }
 
     const filtrar=(terminoBusqueda)=>{
-        var resultadosBusqueda=tablaClientes.filter((elemento)=>{
+        var resultadosBusqueda=tabla.filter((elemento)=>{
             if(elemento.nombres.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
             || elemento.apellidos.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
             ){
                 return(elemento);
             }
         });
-        setClientes(resultadosBusqueda);
+        setCliente(resultadosBusqueda);
     }
    
     
@@ -91,7 +106,7 @@ function Clientes() {
                         <th>ACCIONES</th>
                     </thead>
                     <tbody>
-                        {
+                        {cliente &&
                         cliente.map((clientes)=>(
                             <tr key={clientes.idcliente}>
                                 <td>{clientes.idcliente}</td>
