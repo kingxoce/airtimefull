@@ -1,0 +1,101 @@
+@font-face {
+    font-family: "forest";
+    src: url(../fonts/Lavone.ttf);
+}
+
+.Acercade{
+    text-align: center;
+}
+
+.cont-arcarde {
+    background-color: var(--overlay);
+    color: #fff;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.cont-arcarde:before {
+    content: '';
+    background-image: url('../Imagenes/acercadeFondo.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.cont-arcarde h1{
+    padding-left: 10%;
+    padding-top: 20%;
+    font-size: 4rem;
+    
+}
+
+.cont-arcarde h5 a{
+    padding-left: 10%;
+    padding-top: 0%;
+    color: white;
+}
+
+.info h1 {
+    margin-top: 5%;
+    font-family: forest;
+    color: rgb(40, 36, 105);
+}
+
+.info h1 span {
+    margin-top: 5%;
+    font-family: forest;
+    color: rgb(221, 109, 18);
+}
+
+.tarjetas .col-sm{
+    margin: 2%;
+}
+
+.tarjetas p{
+    text-align: justify;
+    padding-top: 10%;
+}
+
+.tarjetas .col-sm a {
+    color:rgb(23, 23, 85);
+    font: 80px;
+    font-weight: 600;
+}
+
+.tarjetas .col-sm span{
+    color: rgb(231, 168, 49);
+    padding: 5%;
+}
+
+.vamos h1 {
+    text-align: left;
+    font-family: forest;
+    color: rgb(40, 36, 105);
+}
+
+#wrapper {
+    position:relative;
+}
+
+#wrapper>div {
+    margin-left: 5%;
+    width:300px;
+    height:400px;
+}
+
+#div1 {
+    background-image: url('../Imagenes/mochileros.jpg');
+}
+#div2 {
+    position: absolute;
+    background-image: url('../Imagenes/viaja.png');
+    top: 120px;
+    left: 100px;
+}

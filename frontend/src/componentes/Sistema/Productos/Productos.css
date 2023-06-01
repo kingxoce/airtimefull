@@ -1,0 +1,67 @@
+.producto{
+    text-align: center;
+}
+
+.producto-cont{
+    max-width: 100% !important;
+    padding: 40px 30px;
+}
+
+.tit{
+    text-align: left;
+    font-size: 40px;
+}
+
+.nuevo-producto button svg {
+    float: inline-start;
+    margin-right: 2%;
+}
+
+.nuevo-producto button{
+    width: 170px;
+}
+
+.nuevo-producto {
+    text-align: left;
+    margin-bottom: 5%;
+}
+
+
+.inputBuscar{
+    width: 50% !important;
+}
+
+table{
+    min-width: 500px;
+}
+
+table thead{
+    background-color: rgb(26, 38, 92);
+    color: white;
+}
+
+button svg{
+    color: rgb(255, 255, 255);
+}
+
+.containerInput{
+    align-items: end;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 25px;
+}
+
+@media (max-width: 988px) {
+    .inputBuscar{
+        width: 100% !important;
+    }
+
+    .cliente{
+        padding: 40px 5px;
+    }
+
+    .containerInput{
+        padding-bottom: 15px;
+    }
+}

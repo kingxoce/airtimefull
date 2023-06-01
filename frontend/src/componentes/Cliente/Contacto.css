@@ -1,0 +1,99 @@
+@font-face {
+    font-family: "forest";
+    src: url(../fonts/Lavone.ttf);
+}
+
+.contacto{
+    text-align: center;
+}
+
+.cont-contacto {
+    background-color: var(--overlay);
+    color: #fff;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.cont-contacto:before {
+    content: '';
+    background-image: url('../Imagenes/acercadeFondo.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.cont-contacto h1{
+    padding-left: 10%;
+    padding-top: 20%;
+    font-size: 4rem;
+    
+}
+
+.cont-contacto h5 a{
+    padding-left: 10%;
+    padding-top: 0%;
+    color: white;
+}
+
+.info-contacto {
+    margin-top: 5%;
+}
+
+.info-contacto h1 {
+    font-family: forest;
+    color: rgb(40, 36, 105);
+}
+
+#imagen {
+    background-image: url('../Imagenes/mochileros.jpg');
+}
+
+.formulario-contacto {
+    text-align: left;
+    margin: 10%;
+}
+
+.formulario-contacto .imagen{
+    width: 600px;
+}
+
+.formulario-contacto .imagen img{
+    width: 550px;
+}
+
+.formulario-contacto input {
+    background-color: rgba(143, 143, 143, 0.137);
+    margin-bottom: 4%;
+}
+
+.formulario-contacto textarea {
+    background-color: rgba(143, 143, 143, 0.137);
+}
+
+.formulario-contacto button {
+    margin-top: 10%;
+    color: white;
+}
+
+.mapa {
+    margin: 10%;
+}
+
+.mapa .info-mapa{
+    background-color: rgb(245, 245, 245);
+    text-align: left;
+    height: 80%;
+    padding: 10%;
+    padding-top: 50%;
+}
+
+.map {
+    width: 90%;
+}
