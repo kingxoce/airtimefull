@@ -10,7 +10,8 @@ import EditarUser from './componentes/Sistema/Usuarios/Editar'
 import Clientes from './componentes/Sistema/Clientes/Clientes'
 import CreateClientes from './componentes/Sistema/Clientes/Create'
 import EditarClientes from './componentes/Sistema/Clientes/Editar'
-
+import Detalles from './componentes/Cliente/Detalles'
+import MyComponent from './componentes/locos.jsx'
 export default class Router extends Component {
     render() {
         return (
@@ -27,6 +28,8 @@ export default class Router extends Component {
                         <Route path='/Usuarios/edit' element={<EditarUser />} />
                         <Route path='/Clientes/create' element={<CreateClientes />} />
                         <Route path="/Clientes/edit/:id" element={<EditarClientes />} />
+                        <Route path="/detalles/:id" element={<Detalles />} />
+                        <Route path="/locos" element={<MyComponent />} />
                     </Routes>
                 </ BrowserRouter>
             </div>

@@ -14,18 +14,40 @@ import semuc from "../Imagenes/semucChampey.jpg";
 import atitlan from "../Imagenes/atitlan.png";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-
+import axios from "axios";
 
 function Home() {
 
   const[width,setWidth] = useState(0);
   const carusel = useRef();
+  const [paquete, setPaquete] = useState([]);
 
   useEffect(() => {
     setWidth(carusel.current.scrollWidth - carusel.current.offsetWidth);
   }, []);
 
   const navigate = useNavigate();
+
+
+  const peticionGet=async()=>{
+    await axios.get("http://localhost:4000/paquete-get")
+    .then(response=>{
+      setPaquete(response.data);
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+
+  useEffect(()=>{
+    peticionGet();
+    },[])
+
+
+
+
+
+
+
 
   return (
     <div className='home'>
@@ -102,63 +124,32 @@ function Home() {
           <Row className="productos">
             <h1>Plan de Vacaciones Perfecto</h1>
             <Col className="paquete-productos">
+            
+            {paquete &&
+                        paquete.map((paq)=>(
+            
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={antigua} />
+                <Card.Img variant="top" src={paq.foto} />
                 <Card.Body>
                   <Card.Title>
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                    </svg>Antigua Guatemala
+                    </svg>
+                     {paq.detalle}
                   </Card.Title>
                   <Card.Text>
-                    Hermosa ciudad colonial. Conocida por sus calles empedradas, hermosas fachadas coloniales y su rica historia.
-                    <h6>1 DIA</h6>
+                  {paq.descripcion}
+                    <h6>{paq.duracion} Dias</h6>
                   </Card.Text>
-                  <Button variant="warning">Reservar Ahora
+                  <Button onClick={() =>{ navigate(`/detalles/${paq.idpaquete}`) }} variant="warning">Reservar Ahora
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
                     </svg>
                   </Button>
                 </Card.Body>
               </Card>
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={atitlan} />
-                <Card.Body>
-                  <Card.Title>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                    </svg>Semuc Champey
-                  </Card.Title>
-                  <Card.Text>
-                    Impresionante sistema de pozas de agua turquesa situado en la selva de Guatemala. Conocido por su belleza natural y su ambiente pacífico.
-                    <h6>3 DIA 2 PERSONAS</h6>
-                  </Card.Text>
-                  <Button onClick={() =>{ navigate("/Detalles") }} variant="warning">Reservar Ahora
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
-                    </svg>
-                  </Button>
-                </Card.Body>
-              </Card>
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={semuc} />
-                <Card.Body>
-                  <Card.Title>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                    </svg>Atitlán
-                  </Card.Title>
-                  <Card.Text>
-                    Rodeado de majestuosos volcanes y pintorescos pueblos indígenas. Considerado como uno de los lagos más bellos del mundo.
-                    <h6>5 DIA 4 PERSONAS</h6>
-                  </Card.Text>
-                  <Button variant="warning">Reservar Ahora
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
-                    </svg>
-                  </Button>
-                </Card.Body>
-              </Card>
+
+              ))}
             </Col>
           </Row>
           <hr></hr>

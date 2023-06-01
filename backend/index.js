@@ -15,6 +15,11 @@ const db = mysql.createConnection({
 
 app.get("/clientes-get", (req, res) => {    const sql = "SELECT * FROM CLIENTE";    db.query(sql, (err, data) => {        if(err) return res.json("Error");        return res.json(data);    });});
 
+app.get("/paquete-get", (req, res) => {    const sql = "SELECT * FROM PAQUETE";    db.query(sql, (err, data) => {        if(err) return res.json("Error");        return res.json(data);    });});
+
+
+
+
 
 app.get('/',(req,res)=>{
     res.send('Hola Mundo')
@@ -57,6 +62,23 @@ app.post('/crearc', (req, res) => {
                     if(err) return res.json("Error");    
                     return res.json(data);});});
 
+
+                    app.get("/detalles/:id", (req, res) => {  
+                        const sql = "SELECT * FROM PAQUETE WHERE idpaquete=? ;";
+                        const id = req.params.id;  
+                        db.query(sql,[id],(err, data) => {      
+                        if(err) return res.json("Error");    
+                        return res.json(data);});});
+                        
+                        
+                        
+                    app.get("/actividad/:id", (req, res) => {  
+                            const sql = "SELECT * FROM actividad where PAQUETE_idpaquete=?;";
+                            const id = req.params.id;  
+                            db.query(sql,[id],(err, data) => {      
+                            if(err) return res.json("Error");    
+                            return res.json(data);});});
+    
 
 /*app.get('/productos',(req,res)=>{
     var conexion=mysql.createConnection(credenciales)
