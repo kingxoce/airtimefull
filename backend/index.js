@@ -19,13 +19,6 @@ app.get("/paquete-get", (req, res) => {    const sql = "SELECT * FROM PAQUETE"; 
 
 
 
-
-
-app.get('/',(req,res)=>{
-    res.send('Hola Mundo')
-})
-
-
 app.post('/crearc', (req, res) => {    
     const sql = "INSERT INTO CLIENTE (nombres,apellidos,telefono,nit,correo,USUARIO_idusuario) VALUES (?)";    
     const values = [        req.body.nombres,   req.body.apellidos,     req.body.telefono, req.body.nit,req.body.correo, req.body.usuario    ]    
@@ -79,6 +72,39 @@ app.post('/crearc', (req, res) => {
                             if(err) return res.json("Error");    
                             return res.json(data);});});
     
+
+                            app.get("/reporte_antiguedad/:fechaInicio/:fechaFin", (req, res) => {  
+                                const sql = "select concat(cliente.nombres,' ',cliente.apellidos)as name, 200 mora, factura.fecha_vencimiento as fac_v,edc.fecha_vencimiento as pag_v,DATEDIFF(edc.fecha_vencimiento,CURDATE()) as dias, if(DATEDIFF(edc.fecha_vencimiento,CURDATE())>0,'Sin Retraso','Con Retraso') as ret FROM edc JOIN factura on edc.CLIENTE_idcliente=factura.CLIENTE_idcliente  join CLIENTE on edc.CLIENTE_idcliente=cliente.idcliente  where DATE_FORMAT(edc.fecha_vencimiento, '%Y-%m') >= DATE_FORMAT(?, '%Y-%m') and DATE_FORMAT(edc.fecha_vencimiento, '%Y-%m') <= DATE_FORMAT(?, '%Y-%m') and edc.estado=0;";
+                                const fechaInicio = req.params.fechaInicio;  
+                                const fechaFin = req.params.fechaFin;
+                                //parametros almacenados en variables
+                                //se envia el query y los parametros en un json a la ruta declara "/api/reporteFacturas/:fechaInicio/:fechaFin"
+                                db.query(sql,[fechaInicio,fechaFin],(err, data) => {      
+                                if(err) return res.json("Error");    
+                                return res.json(data);});
+                            });
+
+                            app.get("/api/reporteFacturas/:fechaInicio/:fechaFin", (req, res) => {  
+                                const sql = "";
+                                //parametros almacenados en variables
+                                const fechaInicio = req.params.fechaInicio;  
+                                const fechaFin = req.params.fechaFin;
+                                //se envia el query y los parametros en un json a la ruta declara "/api/reporteFacturas/:fechaInicio/:fechaFin"
+                                db.query(sql,[fechaInicio,fechaFin],(err, data) => {      
+                                if(err) return res.json("Error");    
+                                return res.json(data);});
+                            });
+                            app.get("/EDC/:id", (req, res) => {  
+                                const sql = "SELECT detalle,documento,cargo,abono,saldo,fecha,fecha_vencimiento from EDC WHERE CLIENTE_idcliente=? and estado=1 ORDER BY fecha DESC;  ";
+                                //parametros almacenados en variables
+                                const id = req.params.id;  
+                                //se envia el query y los parametros en un json a la ruta declara "/api/reporteFacturas/:fechaInicio/:fechaFin"
+                                db.query(sql,[id],(err, data) => {      
+                                if(err) return res.json("Error");    
+                                return res.json(data);});
+                            });
+
+
 
 /*app.get('/productos',(req,res)=>{
     var conexion=mysql.createConnection(credenciales)

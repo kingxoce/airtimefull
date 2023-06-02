@@ -12,6 +12,9 @@ import CreateClientes from './componentes/Sistema/Clientes/Create'
 import EditarClientes from './componentes/Sistema/Clientes/Editar'
 import Detalles from './componentes/Cliente/Detalles'
 import MyComponent from './componentes/locos.jsx'
+import Tablaansaldos from './componentes/Reportes/Tabla_ansaldos';
+import Reporteansaldos from './componentes/Reportes/Reporte_ansaldos';
+import EDC from './componentes/Reportes/EDC';
 export default class Router extends Component {
     render() {
         return (
@@ -29,7 +32,10 @@ export default class Router extends Component {
                         <Route path='/Clientes/create' element={<CreateClientes />} />
                         <Route path="/Clientes/edit/:id" element={<EditarClientes />} />
                         <Route path="/detalles/:id" element={<Detalles />} />
-                        <Route path="/locos" element={<MyComponent />} />
+                        <Route path="/" element={<MyComponent />} />
+                        <Route path ="/Tablaansaldos/:fechaInicio/:fechaFin" element= {<Tablaansaldos/>}/> 
+                        <Route path ="/reportes/Antiguedad_saldos" element= {<Reporteansaldos />}/>
+                        <Route path ="/Clientes/EDC/:id" element= {<EDC/>}/> 
                     </Routes>
                 </ BrowserRouter>
             </div>

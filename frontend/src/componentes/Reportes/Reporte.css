@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+
+form {
+    margin-right: 20%;
+    margin-left: 20%;
+    padding: 5%;
+    background-color: rgba(221, 218, 218, 0.341);
+}
