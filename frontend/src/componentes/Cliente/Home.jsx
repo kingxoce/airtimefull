@@ -15,9 +15,14 @@ import atitlan from "../Imagenes/atitlan.png";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from "axios";
+import Cookies from 'universal-cookie';
 
 function Home() {
+  const cookies = new Cookies();
+  const [rol, setrol]=useState('');
 
+
+    
   const[width,setWidth] = useState(0);
   const carusel = useRef();
   const [paquete, setPaquete] = useState([]);
@@ -47,8 +52,7 @@ function Home() {
 
 
 
-
-
+    
   return (
     <div className='home'>
         <Navbar />

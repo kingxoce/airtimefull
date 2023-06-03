@@ -2,11 +2,19 @@ import React, { useState,useEffect, useRef} from 'react'
 import axios from "axios"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { Navigate, useNavigate} from 'react-router-dom';
 
 import './Style.css'
 
 function Create() {
+
+    const cookies = new Cookies();   
+    const [rol, setrol]=useState('');
+    useEffect(()=>{
+        setrol(cookies.get('ROL'));
+        },[])
+
     const [nombres, setNombre] = useState('')  
     const [apellidos, setApellidos] = useState('')  
     const [telefono, seTelefono] = useState('')
@@ -40,6 +48,11 @@ function Create() {
     }).catch(err => console.log(err));  
       } 
       
+
+      if (rol==='2') {
+        return <Navigate to="/" />;
+      }
+
 
   return (
     <div className="create">

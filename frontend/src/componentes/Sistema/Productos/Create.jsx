@@ -1,10 +1,18 @@
 import React, { useEffect, useState} from 'react'
 import axios from "axios"
 import Button from 'react-bootstrap/Button'
+import Cookies from 'universal-cookie';
 import {  Form  } from "react-bootstrap";
 import './Style.css'
 
 function Create() {
+    const cookies = new Cookies();   
+    const [rol, setrol]=useState('');
+    const navigate = useNavigate();
+    useEffect(()=>{
+        setrol(cookies.get('ROL'));
+        },[])
+
 
     const [values, setValues] = useState({
         detalle: '',

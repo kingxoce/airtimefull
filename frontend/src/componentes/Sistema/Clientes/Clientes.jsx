@@ -6,22 +6,19 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './Clientes.css'
 import Button from 'react-bootstrap/Button'
 import Navbar from '../NavbarUser'
-import { useNavigate} from 'react-router-dom';
+import { Navigate, useNavigate} from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { Redirect } from 'react-router-dom';
 
 function Clientes() {
+    const cookies = new Cookies();    
+    const [rol, setrol]=useState('');
     const navigate = useNavigate();
-
     const [clientes, setClientes] = useState([]);
     const [tablaClientes, setTablaClientes] = useState([]);
     const [busqueda, setBusqueda] = useState("");
     const [tabla, setTabla]= useState([]);
-
-
-    //conexion por axios hacia la url del backend para obtener los clientes
     const [cliente,setCliente] = useState([])
- 
-
-
     const peticionGet=async()=>{
         await axios.get("http://localhost:4000/clientes-get")
         .then(response=>{
@@ -31,11 +28,34 @@ function Clientes() {
           console.log(error);
         })
       }
-
-
-      useEffect(()=>{
+    
+    useEffect(()=>{
         peticionGet();
         },[])
+
+    useEffect(()=>{
+        setrol(cookies.get('ROL'));
+        },[])
+
+
+    if (rol==='2') {
+        return <Navigate to="/" />;
+      }
+    
+  
+
+    
+
+
+    //conexion por axios hacia la url del backend para obtener los clientes
+
+ 
+
+
+    
+
+
+     
 
 
 
@@ -109,6 +129,7 @@ function Clientes() {
                         {cliente &&
                         cliente.map((clientes)=>(
                             <tr key={clientes.idcliente}>
+                                <td>{rol}</td>
                                 <td>{clientes.idcliente}</td>
                                 <td>{clientes.nombres}</td>
                                 <td>{clientes.apellidos}</td>

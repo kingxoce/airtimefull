@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "forest";
+    src: url(../fonts/Lavone.ttf);
+}
+
+.color {
+    height: 150px;
+    background-color: orange;
+}
+
+.mora-container {
+    position:relative;
+    width: 100%;
+}
+
+.form-mora{
+    width: 100%;
+    position: absolute;
+    top: 110px;
+}
+
+.form-mora h1 {
+    color:rgb(23, 23, 85);
+    text-align: center;
+    font-family: "forest";
+    font-size: 60px;
+}
+
+.form-m {
+    background-color: rgb(255, 255, 255);
+    height: 800px;
+}
+
+.form-m h2 {
+    color:rgb(23, 23, 85);
+}
+
+.tarjeta{
+    width: 200px
+}
+
+form .mb-3 input {
+    width: 200px;
+}

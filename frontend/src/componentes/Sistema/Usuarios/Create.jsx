@@ -1,77 +1,64 @@
-import React, { useEffect, useState} from 'react'
+import React, { useState,useEffect, useRef} from 'react'
 import axios from "axios"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
+
 import './Style.css'
 
 function Create() {
-
-    const [values, setValues] = useState({
-        usuario: '',
-        email: '',
-        password: '',
-        tipo: ''
-    })
-
-    const handleSubmit = (e)=> {
-        e.preventDefault();
-        axios.post('http://localhost:4000/usuarios-post', values)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+    const [usuarios, setUsuarios] = useState('')  
+    const [contraseña, setContraseña] = useState('')  
+    const [rol,setRol] = useState('')      
+    const navigate = useNavigate();
+    
+    const usuariosRef = useRef();
+    const contraseñaRef = useRef();
+    const rolRef = useRef();
+    
+    function handleSubmit(event) {  
+    event.preventDefault();        
+    
+    if (!usuariosRef.current.value||!contraseñaRef.current.value||!rolRef.current.value) {
+      alert("Por favor, Llene todos los campos");
+      return;
     }
-
-    const [isLoading, setLoading] = useState(false);
-
-    useEffect(() => {
-        function simulateNetworkRequest() {
-          return new Promise((resolve) => setTimeout(resolve, 2000));
-        }
     
-        if (isLoading) {
-          simulateNetworkRequest().then(() => {
-            setLoading(false);
-          });
-        }
-      }, [isLoading]);
     
-      const handleClick = () => setLoading(true);
+    
+    axios.post('http://localhost:4000/crearcusuario', {usuarios,contraseña,rol})
+    .then(res => {
+    alert("INGRESADO CON EXITO");  
+    console.log(res); 
+    navigate('/Usuarios');         
+    }).catch(err => console.log(err));  
+      } 
 
   return (
     <div className="create">
         <Form onSubmit={handleSubmit}>
             <h2>Nuevo Usuario</h2>
-            <Form.Group className="mb-3" controlId="formBasicUser">
-                <Form.Label>Usuario</Form.Label>
-                <Form.Control type="text" placeholder="Usuario" 
-                onChange={e => setValues({...values, usuario: e.target.value})}
-                />
+            <Form.Group className="mb-3" controlId="formBasicUsuarios">
+                <Form.Label>Usuarios</Form.Label>
+                <input type="text" placeholder="Usuarios" 
+                 onChange={e => setUsuarios(e.target.value)} ref={usuariosRef} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="text" placeholder="ejemplo@gmail.com" 
-                onChange={e => setValues({...values, email: e.target.value})}
-                />
+            <Form.Group className="mb-3" controlId="formBasicContraseñas">
+                <Form.Label>Contraseñas</Form.Label>
+                <input type="text" placeholder="Contraseñas" 
+                onChange={e => setContraseña(e.target.value)} ref={contraseñaRef} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPass">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="**********" 
-                onChange={e => setValues({...values, password: e.target.value})}
-                />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicTipo">
-                <Form.Label>Tipo de Usuario</Form.Label>
-                <Form.Select aria-label="" onChange={e => setValues({...values, tipo: e.target.value})}>
-                    <option>seleccionar una opcion</option>
-                    <option value="A">Administrativo</option>
-                    <option value="C">Cliente</option>
-                </Form.Select>
+            <Form.Group className="mb-3" controlId="formBasicRol">
+                <Form.Label>Rols</Form.Label>
+                <input type="text" placeholder="Id Rol" 
+                onChange={e => setRol(e.target.value)} ref={rolRef} />
             </Form.Group>
             <Button
                 variant="success"
-                disabled={isLoading}
-                onClick={!isLoading ? handleClick : null}
+                onClick={handleSubmit}
+
                 >
-                {isLoading ? 'Guardando…' : 'Guardar'}
+                Ingresar
             </Button>
         </Form>
     </div>

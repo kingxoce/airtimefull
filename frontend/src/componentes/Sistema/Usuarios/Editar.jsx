@@ -1,59 +1,95 @@
-import React, { useEffect, useState} from 'react'
+import React, { useState,useEffect, useRef} from 'react'
+import axios from "axios"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
-import './Style.css'
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Editar() {
+    const usuarioRef = useRef();
+    const contraseñaRef = useRef();
+    const rolRef = useRef();
+    const {id} = useParams();
+    const navigate = useNavigate();
 
-    const [isLoading, setLoading] = useState(false);
 
-    useEffect(() => {
-        function simulateNetworkRequest() {
-          return new Promise((resolve) => setTimeout(resolve, 2000));
-        }
+    function handleSubmit(event) {    
+        event.preventDefault();        
     
-        if (isLoading) {
-          simulateNetworkRequest().then(() => {
-            setLoading(false);
-          });
-        }
-      }, [isLoading]);
+        if (!usuarioRef.current.value||!contraseñaRef.current.value||!rolRef.current.value) {
+         
+         if(!usuarioRef.current.value){
     
-      const handleClick = () => setLoading(true);
+        usuarioRef.current.value=usuarioRef.current.placeholder
+    
+         }
+    
+         if(!contraseñaRef.current.value){
+    
+            contraseñaRef.current.value=contraseñaRef.current.placeholder
+        
+             }
+    
+             if(!rolRef.current.value){
+    
+                rolRef.current.value=rolRef.current.placeholder
+            
+                 }
+    
+        }    
+        
+    
+    
+    event.preventDefault();     
+    
+
+    axios.put('http://localhost:4000/updatecusuario/'+id,{usuarios: usuarioRef.current.value,contraseña: contraseñaRef.current.value,rol: rolRef.current.value})        
+    .then(res => {   
+    alert("INGRESADO CON EXITO");             
+    console.log(res);            
+    navigate('/Usuarios');        })
+    .catch(err => console.log(err));    } 
+
+  
+    const [usuario,setUsuario] = useState([])
+  useEffect(()=> {
+    axios.get('http://localhost:4000/searchusuario/'+id)
+    .then(res => setUsuario(res.data)
+    .catch(err => console.log(err)));
+
+    },[])
+      
+
+    usuario.map((data)=> (usuarioRef.current.placeholder=data.usuario,
+        contraseñaRef.current.placeholder=data.contraseña,
+        rolRef.current.placeholder=data.ROL_idrol        ));
+      
+
 
   return (
     <div className="editar">
         <Form>
             <h2>Editar Usuario</h2>
-            <Form.Group className="mb-3" controlId="formBasicUser">
-                <Form.Label>Usuario</Form.Label>
-                <Form.Control type="text" placeholder="Usuario" 
+            <Form.Group className="mb-3" controlId="formBasicUsuarios">
+                <Form.Label>Usuarios</Form.Label>
+                <input type="text"  ref={usuarioRef}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="text" placeholder="ejemplo@gmail.com" 
+            <Form.Group className="mb-3" controlId="formBasicContraseñas">
+                <Form.Label>Contraseñas</Form.Label>
+                <input type="text" ref={contraseñaRef}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPass">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" placeholder="**********" 
+            <Form.Group className="mb-3" controlId="formBasicRol">
+                <Form.Label>Rols</Form.Label>
+                <input type="text" ref={rolRef} 
                 />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicTipo">
-                <Form.Label>Tipo de Usuario</Form.Label>
-                <Form.Select aria-label="">
-                    <option>seleccionar una opcion</option>
-                    <option value="A">Administrativo</option>
-                    <option value="C">Cliente</option>
-                </Form.Select>
             </Form.Group>
             <Button
                 variant="success"
-                disabled={isLoading}
-                onClick={!isLoading ? handleClick : null}
+                onClick={handleSubmit}
+
                 >
-                {isLoading ? 'Guardando…' : 'Guardar'}
+                Ingresar
             </Button>
         </Form>
     </div>

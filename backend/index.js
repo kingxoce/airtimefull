@@ -18,10 +18,54 @@ app.get("/clientes-get", (req, res) => {    const sql = "SELECT * FROM CLIENTE";
 app.get("/paquete-get", (req, res) => {    const sql = "SELECT * FROM PAQUETE";    db.query(sql, (err, data) => {        if(err) return res.json("Error");        return res.json(data);    });});
 
 
+app.get("/login/:user/:cont", (req, res) => {  
+    const sql = "SELECT usuario.idusuario,usuario.usuario,usuario.ROL_idrol, cliente.idcliente FROM USUARIO join cliente on usuario.idusuario=cliente.USUARIO_idusuario  WHERE usuario=? and contraseña=?";
+    const user = req.params.user;  
+    const cont = req.params.cont;
+    console.log(user,cont);  
+    db.query(sql,[user,cont],(err, data) => {      
+    if(err) return res.json("Error");    
+    return res.json(data);})});
+
+
+    app.get("/issolventemora/:id", (req, res) => {  
+        const sql = "SELECT IF(detalle like 'Mora%', 'Tiene Mora', 'No tiene mora') AS estado FROM edc where CLIENTE_idcliente=? and cargo IS NOT NULL and detalle Not like 'Compra%' limit 1;";
+        const id= req.params.id;    
+        db.query(sql,[id],(err, data) => {      
+        if(err) return res.json("Error");    
+        return res.json(data);})});
+
+
+        app.get("/issolventepago/:id", (req, res) => {  
+            const sql = "SELECT IF(estado=0, '1', '0') AS estado FROM edc where CLIENTE_idcliente=? and cargo IS NULL and estado=0 limit 1;";
+            const id= req.params.id;    
+            db.query(sql,[id],(err, data) => {      
+            if(err) return res.json("Error");    
+            return res.json(data);})});
+
+
+
+
+            app.get("/pagar/:id", (req, res) => {  
+                const sql = "CALL pagar(?);";
+                const id= req.params.id;    
+                db.query(sql,[id],(err, data) => {      
+                if(err) return res.json("Error");    
+                return res.json(data);})});    
+                
+                
+                app.get("/mora/:id", (req, res) => {  
+                    const sql = "CALL pagarmora(?);";
+                    const id= req.params.id;    
+                    db.query(sql,[id],(err, data) => {      
+                    if(err) return res.json("Error");    
+                    return res.json(data);})});    
+
+
 
 app.post('/crearc', (req, res) => {    
     const sql = "INSERT INTO CLIENTE (nombres,apellidos,telefono,nit,correo,USUARIO_idusuario) VALUES (?)";    
-    const values = [        req.body.nombres,   req.body.apellidos,     req.body.telefono, req.body.nit,req.body.correo, req.body.usuario    ]    
+    const values = [req.body.nombres,   req.body.apellidos,     req.body.telefono, req.body.nit,req.body.correo, req.body.usuario    ]    
     db.query(sql, [values], (err, data) => {        if(err) return res.json("Error");       
     return res.json(data);    })})
 
@@ -48,12 +92,7 @@ app.post('/crearc', (req, res) => {
                 if(err) return res.json("Error");    
                 return res.json(data);});});
                 
-                app.get("/searchclientname/:name", (req, res) => {  
-                    const sql = "SELECT * FROM CLIENTE WHERE nombres like '?%';";
-                    const name = req.params.name;  
-                    db.query(sql,[name],(err, data) => {      
-                    if(err) return res.json("Error");    
-                    return res.json(data);});});
+            
 
 
                     app.get("/detalles/:id", (req, res) => {  
@@ -95,7 +134,7 @@ app.post('/crearc', (req, res) => {
                                 return res.json(data);});
                             });
                             app.get("/EDC/:id", (req, res) => {  
-                                const sql = "SELECT detalle,documento,cargo,abono,saldo,fecha,fecha_vencimiento from EDC WHERE CLIENTE_idcliente=? and estado=1 ORDER BY fecha DESC;  ";
+                                const sql = "SELECT detalle,documento,cargo,abono,saldo,fecha,fecha_vencimiento from EDC WHERE CLIENTE_idcliente=? and estado=1 ORDER BY fecha ASC;  ";
                                 //parametros almacenados en variables
                                 const id = req.params.id;  
                                 //se envia el query y los parametros en un json a la ruta declara "/api/reporteFacturas/:fechaInicio/:fechaFin"

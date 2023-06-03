@@ -2,9 +2,16 @@ import React, { useState,useEffect, useRef} from 'react'
 import axios from "axios"
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import Cookies from 'universal-cookie';
+import { Navigate,useNavigate, useParams } from 'react-router-dom';
 function Editar() {
+
+    const cookies = new Cookies();   
+    const [rol, setrol]=useState('');
+    useEffect(()=>{
+        setrol(cookies.get('ROL'));
+        },[])
+
     const nameRef = useRef();
     const apellidosRef = useRef();
     const telefonoRef = useRef();
@@ -97,7 +104,9 @@ function Editar() {
         usuarioRef.current.placeholder=data.USUARIO_idusuario        ));
       
 
-
+        if (rol==='2') {
+            return <Navigate to="/" />;
+          }
   return (
     <div className="editar">
         <Form>

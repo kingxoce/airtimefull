@@ -1,4 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect, useRef} from 'react'
+import axios from "axios"
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form';
+import md5 from 'md5';
+import Cookies from 'universal-cookie';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
     MDBContainer,
     MDBTabs,
@@ -11,8 +17,6 @@ import {
     MDBCheckbox
   }
   from 'mdb-react-ui-kit';
-import Button from 'react-bootstrap/esm/Button';
-import { useNavigate} from 'react-router-dom';
 import './Login.css';
 
 
@@ -27,7 +31,41 @@ const Login = () => {
         setJustifyActive(value);
     };
 
+
+    const cookies = new Cookies();
     const navigate = useNavigate();
+    const userRef = useRef();
+    const contRef = useRef();
+    const tbRef = useRef();
+    const [user1, setUser] = useState('');
+    const [cont, setCont] = useState('');
+    const [login, setLogin] = useState([]);
+
+    const iniciarSesion=async()=>{
+        await axios.get('http://localhost:4000/login/'+user1+'/'+cont)
+        .then(response=>{
+            return response.data;
+        })
+        .then(response=>{
+            if(response.length>0){
+                var respuesta=response[0];
+                cookies.set('id', respuesta.idusuario, {path: "/"});
+                cookies.set('usuario', respuesta.usuario, {path: "/"});
+                cookies.set('ROL', respuesta.ROL_idrol, {path: "/"});
+                cookies.set('cliente', respuesta.idcliente, {path: "/"});
+                alert(`Bienvenido ${respuesta.usuario}` );
+                window.location.href="./";
+            }else{
+                alert('El usuario o la contraseña no son correctos');
+            }
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+
+    }
+
+
     return (
         <div className='login' id="login">
             <MDBContainer id="formulario" className="p-3 my-5 d-flex flex-column w-50">
@@ -47,16 +85,15 @@ const Login = () => {
                 <MDBTabsContent>
 
                     <MDBTabsPane show={justifyActive === 'tab1'}>
-
-                    <MDBInput wrapperClass='mb-4' label='Email' type='email'/>
-                    <MDBInput wrapperClass='mb-4' label='Contraseña' type='password'/>
+                    <MDBInput wrapperClass='mb-4' label='Usuario' type='text' name='password' onChange={e => setUser(e.target.value)}/>
+                    <MDBInput wrapperClass='mb-4' label='Contraseña' type='password' ref={contRef} onChange={e => setCont(e.target.value)}/>
 
                     <div className="d-flex justify-content-between mx-4 mb-4">
                         <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Recordar' />
                         <a href="!#">Olvidaste tu contraseña?</a>
                     </div>
 
-                    <Button onClick={() =>{ navigate("/Airtime-Home") }} variant="primary">Ingresar</Button>
+                    <Button onClick={()=>iniciarSesion()} variant="primary">Ingresar</Button>
                     <p className="text-center">No eres miembro? <a href="#!">Registrate</a></p>
 
                     </MDBTabsPane>
